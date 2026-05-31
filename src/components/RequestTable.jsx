@@ -1,6 +1,7 @@
 import { authClient } from "@/lib/auth-client";
 import React from "react";
 import { GiCancel } from "react-icons/gi";
+import { toast } from "react-toastify";
 
 export default function RequestTable({ requests }) {
   const getStatusStyle = (status) => {
@@ -33,14 +34,16 @@ export default function RequestTable({ requests }) {
       const data = await response.json();
 
       if (response.ok && data.success) {
-        alert(data.message);
+        toast.success(data.message);
         window.location.reload();
       } else {
-        alert(`Error: ${data.message || "Failed to cancel request."}`);
+        toast.error(`Error: ${data.message || "Failed to cancel request."}`);
       }
     } catch (error) {
-      console.error("Frontend Error during cancellation:", error);
-      alert("A network error occurred. Please try again later.");
+      toast.error(
+        "A network error occurred. Please try again later. Error: ",
+        error,
+      );
     }
   };
 

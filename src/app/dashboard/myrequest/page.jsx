@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { authClient } from "@/lib/auth-client";
 import RequestTable from "@/components/RequestTable";
+import { toast } from "react-toastify";
 
 export default function MyRequest() {
   const { data: session, isPending: authLoading } = authClient.useSession();
@@ -29,10 +30,10 @@ export default function MyRequest() {
 
           setMyRequests(filteredRequests);
         } else {
-          console.error("Failed to fetch adoptions registry collection.");
+          //console.error("Failed to fetch adoptions registry collection.");
         }
       } catch (error) {
-        console.error(
+        toast.error(
           "Network error pulling client requests profile logs:",
           error,
         );

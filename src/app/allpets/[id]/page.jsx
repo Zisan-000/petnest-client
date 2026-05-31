@@ -16,11 +16,11 @@ import { MdOutlineEmail, MdOutlineMedicalInformation } from "react-icons/md";
 
 const PetDetails = async ({ params }) => {
   const { id } = await params;
-  // console.log("Received ID:", id);
+  // //console.log("Received ID:", id);
   const { token } = await auth.api.getToken({
     headers: await headers(),
   });
-  // console.log(token);
+  // //console.log(token);
   const res = await fetch(`http://localhost:5000/pets/${id}`, {
     headers: { authorization: `Bearer ${token}` },
   });

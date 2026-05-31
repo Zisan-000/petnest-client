@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+
 import Link from "next/link";
 import { Button, Card, Spinner } from "@heroui/react";
 import { FaArrowRight } from "react-icons/fa6";
@@ -40,7 +42,7 @@ export default function FeaturedCompanions() {
 
         setAllPets(sanitizedArray);
       } catch (error) {
-        console.error("Failed to retrieve companion records:", error);
+        //console.error("Failed to retrieve companion records:", error);
       } finally {
         setIsLoading(false);
       }
@@ -51,11 +53,11 @@ export default function FeaturedCompanions() {
 
   const featuredPets = allPets.slice(0, 6);
 
-  // Quick console logging matching your original parameters
+  // Quick //console logging matching your original parameters
   useEffect(() => {
     if (!isLoading) {
-      console.log("All Pets from server:", allPets);
-      console.log("Featured Pets sliced:", featuredPets);
+      //console.log("All Pets from server:", allPets);
+      //console.log("Featured Pets sliced:", featuredPets);
     }
   }, [allPets, featuredPets, isLoading]);
 
@@ -100,59 +102,75 @@ export default function FeaturedCompanions() {
       ) : (
         /* Grid Layout Container */
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {featuredPets.map((pet) => (
-            <Card
+          {featuredPets.map((pet, index) => (
+            <motion.div
               key={pet._id}
-              className="py-4 shadow-sm border border-divider hover:scale-[1.01] transition-transform"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 1,
+                delay: index * 0.2,
+                ease: "easeOut",
+              }}
+              // 4. Clean hover elevation effect
+              whileHover={{
+                y: -6,
+                transition: { duration: 0.2 },
+              }}
+              className="w-full"
             >
-              <div className="pb-0 pt-2 px-4 flex-col items-start">
-                <p className="text-tiny uppercase font-bold text-warning">
-                  {pet.species}
-                </p>
-                <small className="text-default-500">{pet.breed}</small>
-                <h4 className="font-bold text-large mt-1">{pet.petName}</h4>
-              </div>
-
-              <div className="overflow-visible py-2 px-4">
-                <Image
-                  alt={`Image of ${pet.petName}`}
-                  className="object-cover rounded-xl w-full h-55"
-                  loading="eager"
-                  src={
-                    pet.imageUrl ||
-                    "https://images.unsplash.com/photo-1543466835-00a7907e9de1"
-                  }
-                  width={400}
-                  height={400}
-                />
-
-                <div className="mt-4 text-sm text-default-600 flex justify-between items-center w-full">
-                  <span className="flex items-center gap-1">
-                    📍 {pet.location || "Dhaka"}
-                  </span>
-                  <span className="font-bold text-foreground bg-default-100 px-3 py-1 rounded-full text-xs">
-                    {pet.adoptionFee === 0 || !pet.adoptionFee
-                      ? "Free"
-                      : `$${pet.adoptionFee}`}
-                  </span>
+              <Card className="py-4 h-full shadow-sm border border-divider transition-shadow hover:shadow-md">
+                <div className="pb-0 pt-2 px-4 flex-col items-start">
+                  <p className="text-tiny uppercase font-bold text-warning">
+                    {pet.species}
+                  </p>
+                  <small className="text-default-500">{pet.breed}</small>
+                  <h4 className="font-bold text-large mt-1">{pet.petName}</h4>
                 </div>
 
-                {/* Navigation details redirection trigger */}
-                <Link
-                  href={`/allpets/${pet._id}`}
-                  className="w-full my-8 block"
-                >
-                  <Button
-                    size="sm"
-                    color="warning"
-                    variant="flat"
-                    className="w-full font-semibold my-5 bg-orange-500"
+                <div className="overflow-visible py-2 px-4 flex flex-col justify-between h-full">
+                  <div>
+                    <Image
+                      alt={`Image of ${pet.petName}`}
+                      className="object-cover rounded-xl w-full h-55"
+                      loading="eager"
+                      src={
+                        pet.imageUrl ||
+                        "https://images.unsplash.com/photo-1543466835-00a7907e9de1"
+                      }
+                      width={400}
+                      height={400}
+                    />
+
+                    <div className="mt-4 text-sm text-default-600 flex justify-between items-center w-full">
+                      <span className="flex items-center gap-1">
+                        📍 {pet.location || "Dhaka"}
+                      </span>
+                      <span className="font-bold text-foreground bg-default-100 px-3 py-1 rounded-full text-xs">
+                        {pet.adoptionFee === 0 || !pet.adoptionFee
+                          ? "Free"
+                          : `$${pet.adoptionFee}`}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Navigation details redirection trigger */}
+                  <Link
+                    href={`/allpets/${pet._id}`}
+                    className="w-full mt-4 block"
                   >
-                    View Details <FaArrowRight></FaArrowRight>
-                  </Button>
-                </Link>
-              </div>
-            </Card>
+                    <Button
+                      size="sm"
+                      color="warning"
+                      variant="flat"
+                      className="w-full font-semibold bg-orange-500 text-white flex items-center justify-center gap-2"
+                    >
+                      View Details <FaArrowRight size={14} />
+                    </Button>
+                  </Link>
+                </div>
+              </Card>
+            </motion.div>
           ))}
         </div>
       )}

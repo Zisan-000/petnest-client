@@ -5,6 +5,7 @@ import useSWR from "swr";
 import { Spinner } from "@heroui/react";
 import Listing from "@/components/Listing";
 import { authClient } from "@/lib/auth-client";
+import { toast } from "react-toastify";
 
 const fetcher = async ([url, token]) => {
   const headers = token ? { authorization: `Bearer ${token}` } : {};
@@ -51,7 +52,7 @@ export default function MyListings() {
         setPetRequests(filtered);
       }
     } catch (error) {
-      console.error("Error pulling pet adoption requests:", error);
+      //console.error("Error pulling pet adoption requests:", error);
     }
   };
 
@@ -69,7 +70,7 @@ export default function MyListings() {
       });
 
       if (res.ok) {
-        alert(`Request successfully ${nextStatus}!`);
+        toast.success(`Request successfully ${nextStatus}!`);
 
         setPetRequests((prev) =>
           prev.map((req) =>
@@ -77,10 +78,10 @@ export default function MyListings() {
           ),
         );
       } else {
-        alert("Failed to update execution parameters.");
+        toast.error("Failed to update execution parameters.");
       }
     } catch (error) {
-      console.error(error);
+      //console.error(error);
     } finally {
       setIsActionLoading(false);
     }
@@ -100,25 +101,29 @@ export default function MyListings() {
       const data = await response.json();
 
       if (response.ok) {
-        alert("Listing removed successfully!");
+        toast.success("Listing removed successfully!");
         const updatedPetsList = allPets.filter((pet) => pet._id !== petId);
         mutate(updatedPetsList, false);
       } else {
-        alert(data.message || "Failed to complete data deletion pipeline.");
+        toast.error(
+          data.message || "Failed to complete data deletion pipeline.",
+        );
       }
     } catch (error) {
-      console.error("Deletion lifecycle failure:", error);
-      alert("Network error: Verification connection path to server lost.");
+      //console.error("Deletion lifecycle failure:", error);
+      toast.error(
+        "Network error: Verification connection path to server lost.",
+      );
     }
   };
-  console.log("Logged In User Email:", user?.email);
-  console.log("Raw Backend Pets Data:", allPets);
+  //console.log("Logged In User Email:", user?.email);
+  //console.log("Raw Backend Pets Data:", allPets);
 
   if (authLoading || dataLoading) {
     return (
       <div className="flex justify-center items-center min-h-100">
         <Spinner
-          label="Loading listings console dashboard..."
+          label="Loading listings //console dashboard..."
           color="warning"
         />
       </div>
@@ -151,19 +156,13 @@ export default function MyListings() {
               key={pet._id}
               pet={pet}
               onDelete={handleDeletePet}
-              onOpenUpdate={(selectedPet) =>
-                console.log(
-                  "Open edit workflow layout wrapper context:",
-                  selectedPet,
-                )
-              }
+              onOpenUpdate={(selectedPet) => selectedPet}
               onOpenRequests={handleOpenRequestsModal}
             />
           ))}
         </div>
       )}
 
-      {/* --- 🛠️ CUSTOM OVERLAY MODAL (RAW HTML/TAILWIND) --- */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl w-full max-w-2xl max-h-[85vh] flex flex-col border border-gray-200 shadow-2xl">

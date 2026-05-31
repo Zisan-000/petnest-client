@@ -3,6 +3,7 @@ import { Button, Input, TextArea, Textarea } from "@heroui/react";
 import React from "react";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
+import { toast } from "react-toastify";
 
 const AddPet = () => {
   const router = useRouter();
@@ -26,14 +27,19 @@ const AddPet = () => {
       });
 
       if (response.ok) {
-        alert("🎉 Pet profile added successfully!");
-        router.push("/dashboard"); // Redirect to
+        toast.success("🎉 Pet profile added successfully!");
+
+        setTimeout(() => {
+          router.push("/dashboard");
+        }, 1500);
       } else {
-        alert("Failed to submit pet listing data.");
+        toast.error("Failed to submit pet listing data.");
       }
     } catch (error) {
-      console.error("Error submitting form payload:", error);
-      alert("Network error: Make sure your Express backend port is listening.");
+      // //console.error("Error submitting form payload:", error);
+      toast.error(
+        "Network error: Make sure your Express backend port is listening.",
+      );
     }
   };
 

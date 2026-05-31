@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 
 export default function Error({ error, reset }) {
   useEffect(() => {
-    console.error("Caught app runtime exception:", error);
+    //console.error("Caught app runtime exception:", error);
   }, [error]);
 
   return (

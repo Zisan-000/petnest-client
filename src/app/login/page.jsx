@@ -16,6 +16,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import React from "react";
 import { FaGoogle } from "react-icons/fa6";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const handleSignin = async (e) => {
@@ -29,10 +30,11 @@ const Login = () => {
     });
 
     if (data) {
+      toast.success("Logged In successfully");
       redirect("/");
     }
     if (error) {
-      alert("Error:", error);
+      toast.error("Error:", error);
     }
   };
 
@@ -42,6 +44,7 @@ const Login = () => {
       provider: "google",
     });
     if (data) {
+      toast.success("Logged In successfully");
       redirect("/");
     }
   };

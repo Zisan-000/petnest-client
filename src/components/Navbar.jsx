@@ -11,7 +11,7 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { data: session, isPending } = authClient.useSession();
   const user = session?.user;
-  // console.log(user);
+  // //console.log(user);
 
   if (isPending) {
     return (
@@ -23,7 +23,7 @@ const Navbar = () => {
 
   return (
     <div>
-      <nav className="sticky top-0 z-40 w-full border-b border-separator bg-background/70 backdrop-blur-lg">
+      <nav className="sticky top-0 z-40 w-full border-b border-separator bg-background/30 backdrop-blur-lg">
         <header className="flex h-16 items-center justify-around px-6">
           <div className="flex items-center gap-4">
             <button

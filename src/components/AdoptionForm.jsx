@@ -4,6 +4,7 @@ import { authClient } from "@/lib/auth-client";
 import { Spinner } from "@heroui/react";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 export default function AdoptionForm({ pet }) {
   const { data: session, isPending } = authClient.useSession();
@@ -35,14 +36,16 @@ export default function AdoptionForm({ pet }) {
       const data = await response.json();
 
       if (response.ok) {
-        alert(`🎉 Application for ${pet.petName} submitted successfully!`);
+        toast.success(
+          `🎉 Application for ${pet.petName} submitted successfully!`,
+        );
         e.target.reset();
         router.push("/allpets");
       } else {
-        alert(data.message || "Failed to submit adoption request.");
+        toast.error(data.message || "Failed to submit adoption request.");
       }
     } catch (error) {
-      console.error("Frontend submission network error:", error);
+      toast.error("Frontend submission network error:", error);
     }
   };
 
@@ -82,7 +85,7 @@ export default function AdoptionForm({ pet }) {
         const found = sanitizedList.some((item) => item.petId === pet?._id);
         setIsAlreadyApplied(found);
       } catch (error) {
-        console.error("Error checking adoption status:", error);
+        //console.error("Error checking adoption status:", error);
       } finally {
         setIsLoadingCheck(false);
       }

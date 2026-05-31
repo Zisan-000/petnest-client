@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 export default function UpdateList({ initialPet }) {
   const router = useRouter();
@@ -31,16 +32,18 @@ export default function UpdateList({ initialPet }) {
       );
 
       if (response.ok) {
-        alert("🎉 Listing updated successfully!");
+        toast.success("🎉 Listing updated successfully!");
         router.push("/dashboard/mylistings");
         router.refresh();
       } else {
         const errorData = await response.json();
-        alert(errorData.message || "Failed to save updates.");
+        toast.error(errorData.message || "Failed to save updates.");
       }
     } catch (error) {
-      console.error("Update request failure:", error);
-      alert("Network error: Could not connect to Express server backend.");
+      toast.error(
+        "Network error: Could not connect to Express server backend. Error: ",
+        error,
+      );
     } finally {
       setIsSubmitting(false);
     }

@@ -39,7 +39,7 @@ export default function FilterUI({ initialName, initialSpecies }) {
   }, [name, selectedSpecies, pathname, router, searchParams]);
 
   return (
-    <div className="flex flex-col md:flex-row gap-6 p-4 border border-divider rounded-xl bg-content1 shadow-sm items-center justify-between">
+    <div className="flex flex-col md:flex-row gap-6 p-4 border border-divider rounded-xl bg-content1 shadow-lg shadow-emerald-300 items-center justify-between">
       <input
         type="text"
         placeholder="Search by pet name..."

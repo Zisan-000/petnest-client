@@ -15,6 +15,7 @@ import {
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import React from "react";
+import { toast } from "react-toastify";
 
 const SignUp = () => {
   const passwordRef = React.useRef(null);
@@ -36,10 +37,10 @@ const SignUp = () => {
       redirect("/");
     }
     if (error) {
-      alert("error", error);
+      toast.error("Error:", error);
     }
 
-    // console.log(user);
+    // //console.log(user);
   };
 
   return (
