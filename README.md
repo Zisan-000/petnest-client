@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🐾 PetNest - Pet Adoption Platform
 
-## Getting Started
+PetNest Adopt is a full-stack pet adoption platform built to connect lovely companions with their forever families. Users can browse available pets, filter them by specific criteria, submit adoption requests, and manage their listings through a seamless, interactive dashboard dashboard.
 
-First, run the development server:
+## 🚀 Live Demo
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+[Insert Live Link Here]
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## ✨ Features
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 👤 Authentication & Security
 
-## Learn More
+- **Secure Sessions:** Handled via **Better-Auth** for robust client and server-side state tracking.
+- **Route Protection:** JSON Web Tokens (JWT) verify incoming backend API request parameter validations securely.
 
-To learn more about Next.js, take a look at the following resources:
+### 🐶 Pet Directory & Advanced Browsing
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Dynamic Search:** Case-insensitive search utilizing MongoDB `$regex` string parsing rules.
+- **Multi-Species Filter:** Refine searches down across custom parameters dynamically using MongoDB `$in` operator matching.
+- **Server-Side Rendering (SSR):** Powered by Next.js App Router `searchParams` state synchronization pipelines for ultra-fast, SEO-friendly performance.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 📑 Adoption Application Engine
 
-## Deploy on Vercel
+- **Double-Submit Protection:** Disables interactive interfaces while submissions process asynchronously.
+- **Live Registry Monitoring:** Instantly detects and warns users if a specific pet has an application pending.
+- **Interactive Requests Management Dashboard:** Application profiles can change statuses (Approved/Rejected/Pending) with interactive animations.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 🎨 User Experience
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Theming Infrastructure:** Native Dark and Light mode controls synced perfectly with **Next-Themes** and custom **HeroUI** compound toggles.
+- **Responsive Visual Scaffolding:** Styled beautifully with **TailwindCSS** for complete desktop and mobile compatibility.
+
+---
+
+## 🛠️ Tech Stack
+
+### Frontend
+
+- **Framework:** Next.js (App Router)
+- **Styling & UI Components:** TailwindCSS, HeroUI
+- **Authentication Client:** Better-Auth (Client Utilities)
+- **Icons:** React Icons
+
+### Backend
+
+- **Runtime Environment:** Node.js
+- **Framework:** Express.js
+- **Database Object Modeling:** MongoDB (Native Driver)
+- **Token Authentication:** JWT Validation Middlewares
+
+---
