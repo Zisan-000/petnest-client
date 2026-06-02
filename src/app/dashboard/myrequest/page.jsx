@@ -18,10 +18,10 @@ export default function MyRequest() {
 
       try {
         setDataLoading(true);
-        const { data: tokenData } = await authClient.token();
-        const res = await fetch("http://localhost:5000/adoptions", {
-          headers: { authorization: `Bearer ${tokenData?.token}` },
-        });
+        // const { data: tokenData } = await authClient.token();
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/adoptions`,
+        );
         if (res.ok) {
           const allAdoptions = await res.json();
           const filteredRequests = allAdoptions.filter(

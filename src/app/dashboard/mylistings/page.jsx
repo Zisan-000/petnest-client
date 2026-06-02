@@ -26,7 +26,9 @@ export default function MyListings() {
     isLoading: dataLoading,
     mutate,
   } = useSWR(
-    user?.email && tokenData ? ["http://localhost:5000/pets", tokenData] : null,
+    user?.email && tokenData
+      ? [`${process.env.NEXT_PUBLIC_SERVER_URL}/pets`, tokenData]
+      : null,
     fetcher,
   );
 
@@ -43,9 +45,12 @@ export default function MyListings() {
 
     try {
       const { data: tokenData } = await authClient.token();
-      const res = await fetch("http://localhost:5000/adoptions", {
-        headers: { authorization: `Bearer ${tokenData?.token}` },
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/adoptions`,
+        {
+          headers: { authorization: `Bearer ${tokenData?.token}` },
+        },
+      );
       if (res.ok) {
         const allAdoptions = await res.json();
         const filtered = allAdoptions.filter((req) => req.petId === pet._id);
@@ -60,14 +65,17 @@ export default function MyListings() {
   const handleUpdateStatus = async (requestId, nextStatus) => {
     try {
       setIsActionLoading(true);
-      const res = await fetch(`http://localhost:5000/adoptions/${requestId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `Bearer ${tokenData?.token}`,
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/adoptions/${requestId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${tokenData?.token}`,
+          },
+          body: JSON.stringify({ status: nextStatus }),
         },
-        body: JSON.stringify({ status: nextStatus }),
-      });
+      );
 
       if (res.ok) {
         toast.success(`Request successfully ${nextStatus}!`);
@@ -94,9 +102,12 @@ export default function MyListings() {
     if (!confirmDelete) return;
 
     try {
-      const response = await fetch(`http://localhost:5000/pets/${petId}`, {
-        method: "DELETE",
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/pets/${petId}`,
+        {
+          method: "DELETE",
+        },
+      );
 
       const data = await response.json();
 

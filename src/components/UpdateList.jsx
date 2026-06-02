@@ -21,7 +21,7 @@ export default function UpdateList({ initialPet }) {
       setIsSubmitting(true);
 
       const response = await fetch(
-        `http://localhost:5000/pets/${initialPet._id}`,
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/pets/${initialPet._id}`,
         {
           method: "PUT",
           headers: {

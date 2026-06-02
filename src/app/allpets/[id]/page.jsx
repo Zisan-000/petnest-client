@@ -21,10 +21,10 @@ const PetDetails = async ({ params }) => {
     headers: await headers(),
   });
   // //console.log(token);
-  const res = await fetch(`http://localhost:5000/pets/${id}`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/pets/${id}`, {
     headers: { authorization: `Bearer ${token}` },
   });
-  const pet = await res.json();
+  const pet = await res?.json();
 
   const {
     petName,

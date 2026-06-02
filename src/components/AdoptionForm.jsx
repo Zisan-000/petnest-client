@@ -24,14 +24,17 @@ export default function AdoptionForm({ pet }) {
     try {
       const { data: tokenData } = await authClient.token();
 
-      const response = await fetch("http://localhost:5000/adoptions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `Bearer ${tokenData?.token}`,
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/adoptions`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${tokenData?.token}`,
+          },
+          body: JSON.stringify(adoptionData),
         },
-        body: JSON.stringify(adoptionData),
-      });
+      );
 
       const data = await response.json();
 
@@ -65,10 +68,13 @@ export default function AdoptionForm({ pet }) {
           headers["Authorization"] = `Bearer ${token}`;
         }
 
-        const res = await fetch("http://localhost:5000/adoptions", {
-          method: "GET",
-          headers: headers,
-        });
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/adoptions`,
+          {
+            method: "GET",
+            headers: headers,
+          },
+        );
 
         if (!res.ok) {
           throw new Error(`HTTP Error! Status: ${res.status}`);

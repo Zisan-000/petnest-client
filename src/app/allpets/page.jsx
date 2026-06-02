@@ -17,7 +17,7 @@ const AllPets = async ({ searchParams }) => {
   if (speciesQuery) queryParams.append("species", speciesQuery);
 
   const res = await fetch(
-    `http://localhost:5000/pets?${queryParams.toString()}`,
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/pets?${queryParams.toString()}`,
     {
       headers: { authorization: `Bearer ${token}` },
       cache: "no-store",

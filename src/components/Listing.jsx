@@ -51,6 +51,8 @@ export default function Listing({
       <div className="overflow-visible py-3 px-4 grow flex flex-col gap-3">
         <div className="relative w-full h-48 rounded-xl overflow-hidden bg-default-100">
           <Image
+            height={400}
+            width={400}
             alt={`Image of ${pet.petName}`}
             className="object-cover rounded-xl"
             src={
@@ -58,8 +60,6 @@ export default function Listing({
               "https://images.unsplash.com/photo-1543466835-00a7907e9de1"
             }
             loading="eager"
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         </div>
 

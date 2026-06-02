@@ -7,6 +7,8 @@ import { toast } from "react-toastify";
 
 const AddPet = () => {
   const router = useRouter();
+  const { data: session, isPending: authLoading } = authClient.useSession();
+  const user = session?.user;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,14 +19,17 @@ const AddPet = () => {
 
     try {
       const { data: tokenData } = await authClient.token();
-      const response = await fetch("http://localhost:5000/pets", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `Bearer ${tokenData?.token}`,
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/pets`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${tokenData?.token}`,
+          },
+          body: JSON.stringify(petData),
         },
-        body: JSON.stringify(petData),
-      });
+      );
 
       if (response.ok) {
         toast.success("🎉 Pet profile added successfully!");
@@ -190,8 +195,8 @@ const AddPet = () => {
             <Input
               label="Owner Email"
               name="ownerEmail"
-              defaultValue="zobaer.zisan@gmail.com"
-              // isReadOnly // Added to safeguard user parsing trends
+              value={user?.email}
+              isReadOnly
               variant="flat"
             />
           </div>

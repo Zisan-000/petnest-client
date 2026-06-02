@@ -23,13 +23,16 @@ export default function RequestTable({ requests }) {
 
     try {
       const { data: tokenData } = await authClient.token();
-      const response = await fetch(`http://localhost:5000/adoptions/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `Bearer ${tokenData?.token}`,
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/adoptions/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${tokenData?.token}`,
+          },
         },
-      });
+      );
 
       const data = await response.json();
 
