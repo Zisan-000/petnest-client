@@ -45,7 +45,7 @@ const Login = () => {
     });
     if (data) {
       toast.success("Logged In successfully");
-      redirect("/");
+      // redirect("/");
     }
   };
 
